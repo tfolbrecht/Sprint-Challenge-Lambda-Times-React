@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-
+// Importing our tab and card data. No need to change anything here.
+import { tabData, cardData } from '../../data';
 import Tabs from './Tabs';
 import Cards from './Cards';
 
-// Importing our tab and card data. No need to change anything here.
-import { tabData, cardData } from '../../data';
+
 
 export default class Content extends Component {
   constructor(props) {
@@ -17,10 +17,13 @@ export default class Content extends Component {
   }
 
   componentDidMount() {
+    this.setState({ cards: cardData });
+    this.setState({ tabs: tabData });
     // Once the component has mounted, get the data and reflect that data on the state.
   }
 
   changeSelected = tab => {
+    this.setState ({ selected: tab })
     // this function should take in the tab and update the state with the new tab.
   };
 
@@ -37,7 +40,7 @@ export default class Content extends Component {
           of the items from cardData. 
         - else, it should only return those cards whose 'tab' matched this.state.selected.
     */
-    return this.state.cards;
+   return this.state.selected === 'all' ? this.state.cards : this.state.cards.filter( card => card.tab === this.state.selected)
   };
 
   render() {
